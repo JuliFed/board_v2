@@ -25,7 +25,7 @@ jwt = JWT(app, authenticate, identity)
 def time_for_posting_comment(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        last_hour = (datetime.utcnow() - timedelta(minutes=60))
+        last_hour = datetime.utcnow() - timedelta(minutes=60)
         count_comm = models.Comment.query\
             .filter_by(user_id=current_identity.id, advert_id=kwargs['advert_id'])\
             .filter(models.Comment.timestamp >= last_hour)\
@@ -37,6 +37,20 @@ def time_for_posting_comment(f):
 
         return f(*args, **kwargs)
 
+    return decorated_function
+
+
+def time_for_posting_like(f):
+    """
+        Decorator for testing users rule sending likes
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        limit_likes = current_identity.limit_likes
+        time_limit = current_identity.time_limit_like
+        if (time_limit + timedelta(minutes=60)) > datetime.utcnow() and not limit_likes:
+            kwargs['limit_by_like'] = True
+        return f(*args, **kwargs)
     return decorated_function
 
 
@@ -96,8 +110,6 @@ def new_comment(advert_id, limit_by_count=False):
         if not validator.new_comment(post_data):
             return jsonify({"comment": 'None', "error": "you must provide a valid data"}), 400
         advert_obj = models.Advert.query.get(advert_id)
-        print(type(current_identity))
-        print(type(advert_obj))
         comment = models.Comment(
             text_comment=post_data["data"],
             timestamp=datetime.utcnow(),
@@ -134,6 +146,22 @@ def get_comments(advert_id):
         return jsonify({"comments": result}), 200
 
     return jsonify({"comments": []}), 200
+
+
+@app.route('/adverts/<int:advert_id>/like', methods=['POST'])
+@jwt_required()
+@time_for_posting_like
+def like_advert(advert_id, limit_by_like=False):
+    if request.method == 'POST':
+        if limit_by_like:
+            return jsonify({"comment": 'None', "error": "You can't like adverts greater then 5 in hour"}), 400
+        models.Advert.query.get(advert_id).set_like()
+        models.User.query.get(current_identity.id).minus_like()
+
+        return redirect('/adverts/%s' % advert_id), 200
+
+    return jsonify({"comment": None}), 500
+
 
 
 if __name__ == '__main__':

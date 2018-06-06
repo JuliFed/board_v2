@@ -3,11 +3,14 @@
 	"name": "Adverts",
 	"description": "",
 	"order": [
+		"73688267-a3a2-923f-5680-d38f2a38481c",
 		"31ad90de-d6f4-b9d1-2f70-ce4fb53c5a8c",
 		"58ee1a95-3397-3662-a3e7-9421ae62484e",
 		"432d8c95-07aa-0981-4f58-65907d3af0da",
 		"7e32dd58-cb19-e7db-4059-c81334a64336",
-		"cb49dad3-33eb-a728-cb6d-e37b2d71fdb6"
+		"cb49dad3-33eb-a728-cb6d-e37b2d71fdb6",
+		"b2e6e32b-a5ea-883f-6452-a60980f3dc38",
+		"8b7ce69c-fe61-8804-ab13-1a3e93a08d76"
 	],
 	"folders": [],
 	"folders_order": [],
@@ -126,6 +129,37 @@
 			"helperAttributes": {}
 		},
 		{
+			"id": "73688267-a3a2-923f-5680-d38f2a38481c",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/register",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "{{url}}/register",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1528266621389,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"username\":\"admin\",\n\t\"password\":\"password\",\n\t\"confirm_password\":\"password\"\n}"
+		},
+		{
 			"id": "7e32dd58-cb19-e7db-4059-c81334a64336",
 			"headers": "Authorization: JWT {{token}}\n",
 			"headerData": [
@@ -156,6 +190,73 @@
 			"helperAttributes": {}
 		},
 		{
+			"id": "8b7ce69c-fe61-8804-ab13-1a3e93a08d76",
+			"headers": "Authorization: JWT {{token}}\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "JWT {{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/adverts/1/comments",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"data": null,
+			"dataMode": "params",
+			"name": "{{url}}/adverts/1/comments",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1528276851798,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "b2e6e32b-a5ea-883f-6452-a60980f3dc38",
+			"headers": "Authorization: JWT {{token}}\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "JWT {{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/adverts/1/like",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "{{url}}/adverts/1/like",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1528276743638,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": ""
+		},
+		{
 			"id": "cb49dad3-33eb-a728-cb6d-e37b2d71fdb6",
 			"headers": "Authorization: JWT {{token}}\nContent-Type: application/json\n",
 			"headerData": [
@@ -184,7 +285,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1528264372990,
+			"time": 1528276923086,
 			"name": "{{url}}/adverts/1",
 			"description": "",
 			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",

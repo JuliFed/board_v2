@@ -5,4 +5,4 @@
 - Flask-JWT
 
 
-https://documenter.getpostman.com/view/4511244/RWEZT3Lt#intro
+https://documenter.getpostman.com/view/4511244/adverts/RWEZT3Vb

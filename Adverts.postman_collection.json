@@ -1,0 +1,195 @@
+{
+	"id": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+	"name": "Adverts",
+	"description": "",
+	"order": [
+		"31ad90de-d6f4-b9d1-2f70-ce4fb53c5a8c",
+		"58ee1a95-3397-3662-a3e7-9421ae62484e",
+		"432d8c95-07aa-0981-4f58-65907d3af0da",
+		"7e32dd58-cb19-e7db-4059-c81334a64336",
+		"cb49dad3-33eb-a728-cb6d-e37b2d71fdb6"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1528263960811,
+	"owner": "4511244",
+	"public": false,
+	"requests": [
+		{
+			"id": "31ad90de-d6f4-b9d1-2f70-ce4fb53c5a8c",
+			"headers": "//username: admin\n//password: admin\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "username",
+					"value": "admin",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "password",
+					"value": "admin",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/auth",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "{{url}}/auth",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1528264141302,
+			"version": 2,
+			"responses": [],
+			"tests": "var data = JSON.parse(responseBody);\r\npostman.clearGlobalVariable(\"token\");\r\npostman.setGlobalVariable(\"token\", data.access_token);",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"username\":\"admin\",\n\t\"password\":\"admin\"\n\t\n}"
+		},
+		{
+			"id": "432d8c95-07aa-0981-4f58-65907d3af0da",
+			"headers": "Authorization: JWT {{token}}\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "JWT {{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/adverts",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "{{url}}/adverts",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1528264280550,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"data\": \"New Advert Title\"\n}"
+		},
+		{
+			"id": "58ee1a95-3397-3662-a3e7-9421ae62484e",
+			"headers": "Authorization: JWT {{token}}\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "JWT {{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/adverts",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"data": null,
+			"dataMode": "params",
+			"name": "{{url}}/adverts",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1528264199245,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "7e32dd58-cb19-e7db-4059-c81334a64336",
+			"headers": "Authorization: JWT {{token}}\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "JWT {{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/adverts/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"data": null,
+			"dataMode": "params",
+			"name": "{{url}}/adverts/1",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1528264304109,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "cb49dad3-33eb-a728-cb6d-e37b2d71fdb6",
+			"headers": "Authorization: JWT {{token}}\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "JWT {{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/adverts/1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1528264372990,
+			"name": "{{url}}/adverts/1",
+			"description": "",
+			"collectionId": "c3c8088a-f232-ca1b-07b9-8cc87b94e22f",
+			"responses": [],
+			"rawModeData": "{\n\t\"data\": \"NEW Comment To Advert\"\n}"
+		}
+	]
+}

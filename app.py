@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, redirect, Response
 from flask_jwt import JWT, jwt_required, current_identity
 from datetime import timedelta, datetime
-from werkzeug.security import safe_str_cmp
 from functools import wraps
 import validator
 import models

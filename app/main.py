@@ -1,11 +1,24 @@
 from flask import Flask, jsonify, request, redirect, Response
 from flask_jwt import JWT, jwt_required, current_identity
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from datetime import timedelta, datetime
 from functools import wraps
-import validator
-import models
-from settings import app, db, bcrypt
+from app import validator
 
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
+app = Flask(__name__)
+app.config.from_object('config')
+app.config.from_object('local_settings')
+app.debug = True
+database = SQLAlchemy(app)
+db = database
+bcrypt = Bcrypt(app)
+from app import models
 
 def authenticate(username, password):
     user = models.User.query.filter_by(username=username).first()
@@ -32,11 +45,10 @@ def time_for_posting_comment(f):
             .order_by(models.Comment.timestamp.desc())\
             .count()
 
-        if count_comm >= 5:
-            kwargs['limit_by_count']=True
-
+        if count_comm >= app.config['LIKES_PER_HOUR_LIMIT']:
+            # return kwargs['limit_by_count']=True
+            return jsonify({"error": "You can't create comments greater than 5 of hour"}), 400
         return f(*args, **kwargs)
-
     return decorated_function
 
 
@@ -49,7 +61,7 @@ def time_for_posting_like(f):
         limit_likes = current_identity.limit_likes
         time_limit = current_identity.time_limit_like
         if (time_limit + timedelta(minutes=60)) > datetime.utcnow() and not limit_likes:
-            kwargs['limit_by_like'] = True
+            return jsonify({"error": "You can't like adverts greater then 5 in hour"}), 400
         return f(*args, **kwargs)
     return decorated_function
 
@@ -87,7 +99,7 @@ def adverts():
         )
         db.session.add(new_advert)
         db.session.commit()
-        return redirect('/adverts/%s' % new_advert.id), 201
+        return jsonify({"advert_id":  new_advert.id}), 201
 
     all_adverts = models.Advert.query.all()
     if len(all_adverts) > 0:
@@ -102,11 +114,9 @@ def adverts():
 @app.route('/adverts/<int:advert_id>', methods=['POST'])
 @jwt_required()
 @time_for_posting_comment
-def new_comment(advert_id, limit_by_count=False):
+def new_comment(advert_id):
     if request.method == 'POST':
         post_data = request.get_json()
-        if limit_by_count:
-            return jsonify({"comment": 'None', "error": "You can't create comments greater than 5 of hour"}), 400
         if not validator.new_comment(post_data):
             return jsonify({"comment": 'None', "error": "you must provide a valid data"}), 400
         advert_obj = models.Advert.query.get(advert_id)
@@ -118,7 +128,8 @@ def new_comment(advert_id, limit_by_count=False):
         )
         db.session.add(comment)
         db.session.commit()
-        return redirect('/adverts/%s/comments/%s' % (advert_id, comment.id)), 201
+        # return redirect('/adverts/%s/comments/%s' % (advert_id, comment.id)), 201
+        return jsonify({"comment_id": comment.id}), 201
 
     return jsonify({"comment": None}), 500
 
@@ -151,18 +162,13 @@ def get_comments(advert_id):
 @app.route('/adverts/<int:advert_id>/like', methods=['POST'])
 @jwt_required()
 @time_for_posting_like
-def like_advert(advert_id, limit_by_like=False):
+def like_advert(advert_id):
     if request.method == 'POST':
-        if limit_by_like:
-            return jsonify({"comment": 'None', "error": "You can't like adverts greater then 5 in hour"}), 400
         models.Advert.query.get(advert_id).set_like()
         models.User.query.get(current_identity.id).minus_like()
-
-        return redirect('/adverts/%s' % advert_id), 200
-
+        return jsonify({"like": True}), 200
     return jsonify({"comment": None}), 500
 
 
 
-if __name__ == '__main__':
-    app.run()
+

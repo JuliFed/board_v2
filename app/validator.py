@@ -14,5 +14,6 @@ def register_data(json_data):
 def new_advert(json_data):
     return True
 
+
 def new_comment(json_data):
     return True

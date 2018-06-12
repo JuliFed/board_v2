@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, redirect, Response
+from flask import Flask, jsonify, request
 from flask_jwt import JWT, jwt_required, current_identity
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -12,13 +12,15 @@ except ImportError:
     pass
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object('app.config')
 app.config.from_object('local_settings')
 app.debug = True
 database = SQLAlchemy(app)
 db = database
 bcrypt = Bcrypt(app)
+
 from app import models
+
 
 def authenticate(username, password):
     user = models.User.query.filter_by(username=username).first()

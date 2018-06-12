@@ -1,3 +1,4 @@
+local_settings.py
 *.db
 .idea/
 # Created by https://www.gitignore.io/api/python,pycharm
